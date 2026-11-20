@@ -1,0 +1,6 @@
+.git
+scripts
+README.md
+site-config.json
+QA.md
+__pycache__

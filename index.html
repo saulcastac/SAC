@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#101312" />
   <meta name="description" content="SAC es un Technology Studio. Diseñamos y construimos soluciones digitales, automatizaciones y software que resuelven problemas reales de negocio." />
+  <link rel="canonical" href="https://sac-technology-studio.vercel.app/" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://sac-technology-studio.vercel.app/" />
   <meta property="og:image" content="https://sac-technology-studio.vercel.app/og-image.png" />
@@ -20,9 +21,10 @@
   <title>SAC® — Technology Studio</title>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
   <link rel="stylesheet" href="./styles.css" />
+  <script src="/analytics.js" defer></script>
   <script src="./main.js" defer></script>
 </head>
-<body>
+<body data-service="inicio">
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header class="site-header" id="inicio">
     <div class="container nav-wrap">
@@ -32,7 +34,7 @@
         <a href="#soluciones">Soluciones</a>
         <a href="#proyectos">Proyectos</a>
         <a href="#proceso">Cómo trabajamos</a>
-        <a class="nav-cta" href="#contacto">Hablemos <span aria-hidden="true">↗</span></a>
+        <a class="nav-cta" href="#contacto" data-cta="header">Hablemos <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
   </header>
@@ -46,7 +48,7 @@
           <h1 id="hero-title">Tecnología<br>que <span class="accent">resuelve<span class="period">.</span></span></h1>
           <p class="hero-intro">Entendemos cómo funciona tu negocio. Diseñamos y construimos soluciones digitales para hacerlo funcionar mejor.</p>
           <div class="hero-actions">
-            <a class="button button-lime" href="#contacto">Cuéntanos tu proyecto <span aria-hidden="true">↗</span></a>
+            <a class="button button-lime" href="#contacto" data-cta="hero">Cuéntanos tu proyecto <span aria-hidden="true">↗</span></a>
             <a class="text-link light-link" href="#proyectos">Conoce nuestro trabajo <span aria-hidden="true">↗</span></a>
           </div>
         </div>
@@ -71,10 +73,10 @@
         <div class="section-top"><span class="section-label">01 / QUÉ HACEMOS</span><span class="tiny-index">DISEÑAMOS PARA RESOLVER ↘</span></div>
         <div class="section-heading-grid"><h2 id="solutions-title">No se trata de usar más tecnología.<br><em>Se trata de usarla mejor.</em></h2><p>Identificamos dónde podemos generar valor y construimos la solución adecuada para cada reto: desde un sitio web hasta una plataforma que transforme la operación de tu empresa.</p></div>
         <div class="services-grid">
-          <article class="service-card"><div class="service-top"><span class="service-num">01</span><span class="service-symbol" aria-hidden="true">↗</span></div><div class="service-illustration illustration-web" aria-hidden="true"><span class="browser-bar"><i></i><i></i><i></i></span><span class="browser-line big"></span><span class="browser-line short"></span><span class="browser-block"></span></div><div class="service-bottom"><h3>Presencia digital</h3><p>Sitios y experiencias digitales que explican tu oferta, generan confianza y facilitan que nuevos clientes te encuentren.</p></div></article>
-          <article class="service-card"><div class="service-top"><span class="service-num">02</span><span class="service-symbol" aria-hidden="true">↗</span></div><div class="service-illustration illustration-flow" aria-hidden="true"><span class="flow-box">A</span><span class="flow-path"></span><span class="flow-mid">✳</span><span class="flow-path"></span><span class="flow-box">B</span></div><div class="service-bottom"><h3>Automatización</h3><p>Conectamos sistemas y automatizamos tareas repetitivas para reducir trabajo manual, errores y tiempos de respuesta.</p></div></article>
-          <article class="service-card"><div class="service-top"><span class="service-num">03</span><span class="service-symbol" aria-hidden="true">↗</span></div><div class="service-illustration illustration-software" aria-hidden="true"><span class="side-panel"></span><span class="main-panel"><i></i><i></i><i></i></span><span class="analytics-panel"><b></b><b></b><b></b></span></div><div class="service-bottom"><h3>Software a medida</h3><p>Desarrollamos plataformas y herramientas que se adaptan a tus procesos, en lugar de obligar a tu equipo a adaptarse a ellas.</p></div></article>
-          <article class="service-card"><div class="service-top"><span class="service-num">04</span><span class="service-symbol" aria-hidden="true">↗</span></div><div class="service-illustration illustration-ai" aria-hidden="true"><span class="ai-ring ring-a"></span><span class="ai-ring ring-b"></span><span class="ai-center">✳</span><span class="ai-point p-a"></span><span class="ai-point p-b"></span><span class="ai-point p-c"></span></div><div class="service-bottom"><h3>Inteligencia artificial</h3><p>Aplicamos IA donde aporta valor real: analizar información, procesar documentos y facilitar decisiones y operaciones.</p></div></article>
+          <article class="service-card"><div class="service-top"><span class="service-num">01</span><span class="service-symbol" aria-hidden="true">✳</span></div><div class="service-illustration illustration-flow" aria-hidden="true"><span class="flow-box">A</span><span class="flow-path"></span><span class="flow-mid">✳</span><span class="flow-path"></span><span class="flow-box">B</span></div><div class="service-bottom"><h3>Automatización e IA</h3><p>Elimina tareas repetitivas y conecta procesos para que tu equipo dedique su tiempo a lo que importa.</p><a class="service-link" href="/servicios/automatizacion-ia">Conoce Automatización e IA</a></div></article>
+          <article class="service-card"><div class="service-top"><span class="service-num">02</span><span class="service-symbol" aria-hidden="true">✳</span></div><div class="service-illustration illustration-ai" aria-hidden="true"><span class="ai-ring ring-a"></span><span class="ai-ring ring-b"></span><span class="ai-center">✳</span><span class="ai-point p-a"></span><span class="ai-point p-b"></span><span class="ai-point p-c"></span></div><div class="service-bottom"><h3>Capacitación en IA</h3><p>Talleres prácticos para que tu equipo aproveche la IA en su trabajo cotidiano, con criterio y ejemplos propios.</p><a class="service-link" href="/servicios/capacitacion-ia">Conoce Capacitación en IA</a></div></article>
+          <article class="service-card"><div class="service-top"><span class="service-num">03</span><span class="service-symbol" aria-hidden="true">✳</span></div><div class="service-illustration illustration-software" aria-hidden="true"><span class="side-panel"></span><span class="main-panel"><i></i><i></i><i></i></span><span class="analytics-panel"><b></b><b></b><b></b></span></div><div class="service-bottom"><h3>Acompañamiento tecnológico</h3><p>Un equipo externo para identificar oportunidades, priorizar mejoras y acompañar su implementación.</p><a class="service-link" href="/servicios/acompanamiento-ia">Conoce Acompañamiento tecnológico</a></div></article>
+          <article class="service-card"><div class="service-top"><span class="service-num">04</span><span class="service-symbol" aria-hidden="true">✳</span></div><div class="service-illustration illustration-web" aria-hidden="true"><span class="browser-bar"><i></i><i></i><i></i></span><span class="browser-line big"></span><span class="browser-line short"></span><span class="browser-block"></span></div><div class="service-bottom"><h3>Desarrollo web y software</h3><p>Sitios, plataformas y herramientas a medida para resolver necesidades concretas de tu negocio.</p><a class="service-link" href="/servicios/desarrollo-web">Conoce Desarrollo web y software</a></div></article>
         </div>
         <p class="solutions-footnote">¿No sabes qué tipo de solución necesitas? <a href="#contacto">Cuéntanos qué está pasando en tu negocio <span aria-hidden="true">↗</span></a></p>
       </div>
@@ -134,9 +136,12 @@
     <section class="section philosophy" id="estudio" aria-labelledby="philosophy-title"><div class="container philosophy-grid"><div><span class="section-label">04 / NUESTRA FORMA DE PENSAR</span><h2 id="philosophy-title">La tecnología es el medio.<br><em>Tu negocio es el punto de partida.</em></h2></div><div class="philosophy-right"><p>Nos interesa entender qué está frenando a tu empresa y construir algo que realmente cambie la forma en que trabaja. A veces será una automatización sencilla. Otras, una plataforma completa.</p><p>No proponemos herramientas por tendencia. Elegimos la solución por su utilidad.</p><span class="philosophy-signature">SAC<span>.</span> <small>STRATEGY · DESIGN · TECHNOLOGY</small></span></div></div></section>
 
     <section class="contact-section" id="contacto" aria-labelledby="contact-title">
-      <div class="container contact-grid"><div class="contact-copy"><span class="section-label">05 / HABLEMOS</span><h2 id="contact-title">¿Qué necesita<br><em>resolver tu negocio?</em></h2><p>Cuéntanos qué tienes en mente. Podemos comenzar con un problema, una idea o un proceso que quieras mejorar.</p><div class="contact-whatsapp"><a class="button button-dark" href="https://wa.me/524921191702" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp al +52 492 119 1702">Escríbenos por WhatsApp <span aria-hidden="true">↗</span></a><span class="contact-whatsapp-number">+52 492 119 1702</span></div><span class="contact-mark" aria-hidden="true">✳</span></div><div class="contact-form-wrap"><div class="contact-form-top"><strong>Iniciemos una conversación.</strong><span>01 / 01</span></div><form id="contact-form" action="https://formsubmit.co/saulcastac@gmail.com" method="POST">
+      <div class="container contact-grid"><div class="contact-copy"><span class="section-label">05 / HABLEMOS</span><h2 id="contact-title">¿Qué necesita<br><em>resolver tu negocio?</em></h2><p>Cuéntanos qué tienes en mente. Podemos comenzar con un problema, una idea o un proceso que quieras mejorar.</p><div class="contact-whatsapp"><a class="button button-dark" href="https://wa.me/524921191702" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp al +52 492 119 1702">Escríbenos por WhatsApp <span aria-hidden="true">↗</span></a><span class="contact-whatsapp-number">+52 492 119 1702</span></div><span class="contact-mark" aria-hidden="true">✳</span></div><div class="contact-form-wrap"><div class="contact-form-top"><strong>Iniciemos una conversación.</strong><span>01 / 01</span></div><form id="contact-form" action="https://formsubmit.co/saulcastac@gmail.com" method="POST" data-service="inicio">
 <input type="hidden" name="_subject" value="Nueva consulta — SAC Technology Studio">
 <input type="hidden" name="_template" value="table">
+<input type="hidden" name="servicio_origen" value="inicio">
+<input type="hidden" name="landing_origen" value="/">
+<input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_content" value=""><input type="hidden" name="utm_term" value="">
 <input type="hidden" name="_next" value="https://sac-technology-studio.vercel.app/gracias.html">
 <input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off" aria-hidden="true">
 <label for="contact-name">Tu nombre</label><input id="contact-name" name="nombre" autocomplete="name" placeholder="¿Cómo te llamas?" required maxlength="100" /><label for="contact-company">Empresa</label><input id="contact-company" name="empresa" autocomplete="organization" placeholder="¿De qué empresa nos escribes?" maxlength="120" /><label for="contact-email">Correo electrónico</label><input id="contact-email" name="email" autocomplete="email" type="email" placeholder="nombre@empresa.com" required maxlength="180" /><label for="contact-message">¿Qué te gustaría resolver?</label><textarea id="contact-message" name="mensaje" placeholder="Cuéntanos brevemente sobre tu idea o necesidad..." required maxlength="2500" rows="4"></textarea><p class="form-note">SAC SA de CV, con domicilio en Zapopan, Jalisco, usará tu nombre, empresa, correo y mensaje para atender tu consulta y dar seguimiento a tu proyecto. Puedes limitar su uso escribiendo a <a href="mailto:saulcastac@gmail.com">saulcastac@gmail.com</a>. No incluyas datos sensibles ni información de pacientes.</p>

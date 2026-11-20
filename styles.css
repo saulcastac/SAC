@@ -78,3 +78,120 @@
 
 .contact-whatsapp { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 28px; }
 .contact-whatsapp-number { font-size: 15px; white-space: nowrap; }
+
+/* Service pages extend the studio's editorial grid and restrained palette. */
+.service-card .service-bottom p { font-size: 16px; }
+.service-card .service-bottom h3 { font-size: clamp(22px, 2vw, 29px); }
+.service-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 18px; font-size: 14px; font-weight: 700; text-decoration: underline; text-underline-offset: 5px; }
+.service-card:focus-within { outline: 2px solid #365c2e; outline-offset: 3px; }
+.service-page .section-label, .service-page .eyebrow { font-size: 12px; line-height: 1.6; letter-spacing: 1.6px; }
+.service-page .nav { font-size: 14px; }
+.service-hero { padding: 28px 0 0; }
+.service-breadcrumb { display: flex; align-items: center; gap: 12px; color: #b7c4b9; font-size: 14px; }
+.service-breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; }
+.service-breadcrumb a:hover { color: var(--accent); }
+.service-hero-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .8fr); align-items: center; gap: 6%; padding: 52px 0 64px; }
+.service-hero h1 { font-size: clamp(44px, 4.7vw, 78px); line-height: 1.04; letter-spacing: -.065em; margin: 24px 0; font-weight: 650; }
+.service-hero h1 em { color: var(--accent); font-style: normal; }
+.service-intro { max-width: 620px; font-size: clamp(17px, 1.6vw, 21px); color: #bdc9bf; line-height: 1.6; }
+.service-hero .button { margin-top: 30px; min-height: 52px; font-size: 15px; line-height: 1.45; gap: 12px; }
+.service-hero-foot { border-top: 1px solid #38423b; padding: 23px 0; font-size: 12px; line-height: 1.6; color: #bdc9bf; letter-spacing: 1.5px; }
+.service-diagram { border: 1px solid #425545; padding: 30px; background: #19231c; position: relative; }
+.service-diagram:before { content: ''; position: absolute; top: -1px; left: -1px; width: 55px; height: 3px; background: var(--accent); }
+.diagram-kicker { display: block; color: #b9cbb8; font-size: 12px; line-height: 1.6; }
+.diagram-title { font-size: clamp(24px, 2.2vw, 35px); line-height: 1.2; letter-spacing: -.04em; margin: 28px 0; }
+.diagram-flow { display: flex; flex-direction: column; align-items: stretch; }
+.diagram-flow span { display: block; border: 1px solid #58705b; padding: 16px; font-size: 15px; text-align: center; }
+.diagram-flow span + span:before { content: ''; display: block; position: absolute; left: 50%; top: -19px; height: 18px; border-left: 1px dashed #7eaa78; }
+.diagram-flow span + span { position: relative; margin-top: 18px; }
+.diagram-flow span:last-child { color: #152517; background: var(--accent); border-color: var(--accent); font-weight: 700; }
+.diagram-note { font-size: 14px; line-height: 1.6; color: #b9cbb8; margin-top: 24px; }
+.service-section { padding: 96px 0; }
+.service-heading { max-width: 780px; }
+.service-heading h2, .service-evidence h2 { font-size: clamp(34px, 3.7vw, 58px); line-height: 1.1; letter-spacing: -.055em; margin: 22px 0; font-weight: 600; }
+.service-heading h2 em, .service-evidence h2 em { font-style: normal; color: #64765d; }
+.theme-dark .service-heading h2 em, .service-evidence h2 em { color: var(--accent); }
+.service-heading > p { max-width: 650px; color: #596359; font-size: 18px; line-height: 1.65; }
+.problem-columns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 38px; margin-top: 50px; }
+.problem-columns article { border-top: 1px solid #b8c2b3; padding-top: 24px; }
+.problem-columns h3 { font-size: 24px; line-height: 1.2; letter-spacing: -.035em; margin-bottom: 14px; }
+.problem-columns p, .application-row p { font-size: 16px; line-height: 1.7; color: #596359; }
+.service-applications { background: #e8ece2; }
+.application-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 8%; }
+.application-row { border-top: 1px solid #b8c2b3; padding: 24px 0; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); gap: 24px; }
+.application-row:last-child { border-bottom: 1px solid #b8c2b3; }
+.application-row h3 { font-size: 22px; line-height: 1.25; letter-spacing: -.035em; }
+.service-evidence { padding: 88px 0; background: #1c2c22; border-bottom: 1px solid #425545; }
+.evidence-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .8fr); gap: 10%; align-items: center; }
+.service-evidence p { font-size: 17px; line-height: 1.7; color: #c3cec3; }
+.service-evidence .text-link { margin-top: 24px; font-size: 15px; }
+.evidence-numbers > div { border-bottom: 1px solid #58705b; padding: 22px 0; }
+.evidence-numbers strong { display: block; font-size: clamp(52px, 6vw, 86px); letter-spacing: -.065em; line-height: 1.05; color: var(--accent); }
+.evidence-numbers span { display: block; font-size: 16px; margin-top: 10px; }
+.evidence-numbers > p { margin-top: 20px; font-size: 14px; }
+.evidence-editorial { padding: 36px; border: 1px solid #58705b; }
+.evidence-editorial > span { font-size: clamp(70px, 9vw, 130px); font-weight: 800; line-height: 1; letter-spacing: -.07em; }
+.evidence-editorial hr { border: 0; border-top: 1px solid #58705b; margin: 28px 0; }
+.service-steps { list-style: none; counter-reset: service-step; padding: 0; margin: 44px 0 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
+.service-steps li { counter-increment: service-step; border-top: 1px solid #425545; padding-top: 20px; }
+.service-steps li:before { content: '0' counter(service-step); display: block; font-size: 14px; color: var(--accent); margin-bottom: 24px; }
+.service-steps h3 { font-size: 22px; line-height: 1.25; letter-spacing: -.035em; margin-bottom: 14px; }
+.service-steps p { font-size: 16px; line-height: 1.7; color: #b9c9bc; }
+.service-expectation { border-left: 2px solid var(--accent); padding-left: 24px; margin-top: 48px; max-width: 880px; font-size: 18px; line-height: 1.65; color: #d5ded2; }
+.faq-layout { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 8%; }
+.service-faq details { border-bottom: 1px solid #bec6b8; }
+.service-faq details:first-child { border-top: 1px solid #bec6b8; }
+.service-faq summary { cursor: pointer; padding: 25px 24px 25px 0; font-size: 18px; line-height: 1.5; font-weight: 600; }
+.service-faq summary::marker { color: #365c2e; }
+.service-faq details p { font-size: 16px; line-height: 1.75; padding-bottom: 26px; color: #596359; }
+summary:focus-visible { outline: 3px solid #6bd034; outline-offset: 4px; }
+.service-page .contact-copy h2 { font-size: clamp(38px, 4vw, 62px); letter-spacing: -.055em; }
+.service-page .contact-copy .contact-reassurance { font-size: 16px; margin-top: 22px; }
+.service-page .contact-whatsapp .text-link { text-decoration: underline; text-underline-offset: 5px; font-size: 16px; }
+.service-page form label { font-size: 14px; }
+.service-page input, .service-page textarea { font-size: 16px; }
+.service-page .form-note { font-size: 13px; line-height: 1.6; }
+.service-page .privacy-consent { font-size: 14px; }
+.optional-label { font-weight: 400; }
+.related-services { padding-top: 40px; padding-bottom: 40px; }
+.related-services > p { font-size: 14px; color: #596359; margin-bottom: 16px; }
+.related-services > div { display: flex; flex-wrap: wrap; gap: 16px 32px; }
+.related-services a { font-size: 16px; display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 5px; }
+@media (max-width: 1100px) {
+  .service-hero-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, .8fr); gap: 32px; }
+  .service-diagram { padding: 24px; }
+  .application-layout, .faq-layout { gap: 40px; }
+  .application-row { grid-template-columns: 1fr; gap: 10px; }
+  .service-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .service-hero-grid { grid-template-columns: minmax(0, 1fr); padding-top: 30px; padding-bottom: 36px; gap: 40px; }
+  .service-hero h1 { font-size: clamp(40px, 7.9vw, 60px); }
+  .service-hero .button { max-width: 100%; justify-content: center; }
+  .service-hero-foot { font-size: 12px; letter-spacing: .8px; }
+  .service-diagram { padding: 24px; }
+  .diagram-title { font-size: 28px; }
+  .service-section { padding: 64px 0; }
+  .problem-columns, .application-layout, .evidence-grid, .faq-layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .problem-columns { margin-top: 32px; }
+  .service-evidence { padding: 64px 0; }
+  .service-page .contact-grid { gap: 32px; }
+  .service-page .contact-copy h2 { margin-top: 24px; }
+  .service-expectation { font-size: 16px; padding-left: 18px; }
+}
+@media (max-width: 480px) {
+  .service-steps { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .service-steps li:before { margin-bottom: 14px; }
+  .service-hero h1 { font-size: clamp(36px, 10.4vw, 48px); }
+  .service-diagram { padding: 22px; }
+  .service-page .contact-form-wrap { padding: 24px 20px; }
+}
+/* The mobile menu remains usable when JavaScript is unavailable. */
+@media (max-width: 760px) {
+  html:not(.js) .menu-toggle { display: none; }
+  html:not(.js) .site-header { height: auto; position: relative; }
+  html:not(.js) .nav-wrap { flex-wrap: wrap; padding-top: 16px; }
+  html:not(.js) .nav { position: static; display: flex; width: 100%; margin-top: 16px; }
+}
+.service-page .contact-whatsapp .text-link { color: #172117; border-bottom: 0; }
+.service-page .contact-whatsapp .text-link:hover { color: #31502a; }

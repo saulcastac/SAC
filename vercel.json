@@ -5,9 +5,36 @@
   "installCommand": null,
   "outputDirectory": ".",
   "headers": [
-    { "source": "/(.*)", "headers": [
-      { "key": "X-Content-Type-Options", "value": "nosniff" },
-      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
-    ] }
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/servicios/automatizacion-ia",
+      "destination": "/servicios/automatizacion-ia.html"
+    },
+    {
+      "source": "/servicios/capacitacion-ia",
+      "destination": "/servicios/capacitacion-ia.html"
+    },
+    {
+      "source": "/servicios/acompanamiento-ia",
+      "destination": "/servicios/acompanamiento-ia.html"
+    },
+    {
+      "source": "/servicios/desarrollo-web",
+      "destination": "/servicios/desarrollo-web.html"
+    }
   ]
 }
