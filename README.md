@@ -4,7 +4,7 @@ Sitio estático en HTML, CSS y JavaScript, publicado en Vercel.
 
 ## Contacto
 
-El formulario envía por POST a FormSubmit y dirige las consultas a saulcastac@gmail.com. Incluye consentimiento obligatorio, honeypot y la verificación antispam predeterminada del servicio. El primer envío requiere activar el formulario desde el correo de confirmación de FormSubmit; después debe comprobarse la recepción de una consulta real. No requiere claves API ni backend propio.
+El formulario envía por POST a FormSubmit y dirige las consultas a saulcastac@gmail.com. Incluye consentimiento obligatorio, honeypot y la verificación antispam predeterminada del servicio. El propietario confirmó que el formulario está activado y funciona. Tras procesar el envío y la verificación antispam, FormSubmit redirige a `gracias.html` mediante `_next`. Si cambia el dominio, actualizar esta URL absoluta en `index.html`. No requiere claves API ni backend propio.
 
 ## Contenido
 
@@ -22,11 +22,14 @@ Proyecto de Vercel: sac-technology-studio
 ID: prj_6dzateTrGZsZwh9EqmvwnUpr17aw
 Equipo: team_AwBkmnPtSDRBTVB5OCHO6QBw
 
-Publicar únicamente index.html, styles.css, main.js, favicon.svg, privacidad.html y vercel.json. La configuración usa alojamiento estático, sin instalación ni compilación. No subir notas internas o archivos de credenciales.
+Publicar únicamente index.html, styles.css, main.js, favicon.svg, privacidad.html, gracias.html, og-image.png y vercel.json. La configuración usa alojamiento estático, sin instalación ni compilación. No subir notas internas o archivos de credenciales.
+
+## Imagen para compartir
+
+`og-image.png` es la imagen de vista previa de la página principal. Las etiquetas Open Graph y Twitter en `index.html` usan la URL pública `https://sac-technology-studio.vercel.app/og-image.png`. Si cambia el dominio, actualizar estas direcciones y `og:url`. Publicar el HTML y la imagen juntos; WhatsApp puede conservar vistas previas anteriores en caché.
 
 ## Pendientes
 
-- Activación de FormSubmit y prueba de recepción de correo.
-- Imagen para compartir (Open Graph).
-- Prueba final en teléfonos reales y de todo el recorrido de contacto.
+- Verificar el retorno de FormSubmit a la nueva página de confirmación tras el despliegue.
+- Revisión de tamaños móviles confirmada por el propietario en navegador de escritorio; prueba en teléfonos físicos opcional.
 - Dominio propio y analítica cuando se definan.

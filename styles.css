@@ -64,3 +64,14 @@
 .privacy-page section { margin: 36px 0; }
 .privacy-page h2 { font-size: 25px; line-height: 1.25; letter-spacing: -.03em; margin-bottom: 16px; }
 .privacy-page p { font-size: 16px; line-height: 1.75; margin-bottom: 16px; }
+
+/* Confirmation after FormSubmit processes the inquiry. */
+.confirmation-body { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
+.confirmation-page { max-width: 1000px; padding-top: clamp(40px, 7vw, 90px); padding-bottom: 64px; flex: 1; }
+.confirmation-mark { display: grid; place-items: center; width: 62px; height: 62px; border-radius: 50%; background: var(--accent); color: var(--ink); font-size: 30px; margin-bottom: 28px; }
+.confirmation-page h1 { font-size: clamp(38px, 7vw, 80px); line-height: 1.06; letter-spacing: -.055em; margin: 24px 0; }
+.confirmation-page h1 em { font-style: normal; color: #365c2e; }
+.confirmation-intro { max-width: 650px; font-size: 19px; line-height: 1.65; }
+.confirmation-note { max-width: 620px; margin-top: 18px; color: #616b61; font-size: 16px; line-height: 1.7; }
+.confirmation-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; margin-top: 32px; }
+.confirmation-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; border-top: 1px solid var(--border); padding-top: 24px; padding-bottom: 24px; font-size: 12px; color: #616b61; }
