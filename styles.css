@@ -75,3 +75,6 @@
 .confirmation-note { max-width: 620px; margin-top: 18px; color: #616b61; font-size: 16px; line-height: 1.7; }
 .confirmation-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; margin-top: 32px; }
 .confirmation-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; border-top: 1px solid var(--border); padding-top: 24px; padding-bottom: 24px; font-size: 12px; color: #616b61; }
+
+.contact-whatsapp { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 28px; }
+.contact-whatsapp-number { font-size: 15px; white-space: nowrap; }
