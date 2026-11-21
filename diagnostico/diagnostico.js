@@ -339,6 +339,23 @@
     }).join('\n\n');
   }
 
+  // Explica en lenguaje simple qué respuestas movieron cada puntaje (va al correo del reporte).
+  function explain(a, r) {
+    const label = (id, v) => { const q = QUESTIONS.find((x) => x.id === id); return ((q.options || []).find(([k]) => k === v) || [v, v])[1]; };
+    const areas = (a.areas || []).map((v) => label('areas', v).toLowerCase());
+    const areasTxt = areas.length ? `${areas.length === 1 ? 'un área' : areas.length + ' áreas'} que les quita tiempo (${areas.join(', ')})` : 'sin un área crítica identificada';
+    const horasTxt = { '<5': 'menos de 5 h/semana', '5-20': 'entre 5 y 20 h/semana', '20-50': 'entre 20 y 50 h/semana', '50+': 'más de 50 h/semana', nose: 'horas aún sin medir' }[a.horas] || 'horas sin dato';
+    const datosTxt = { excel: 'Excel y papel', basico: 'un sistema contable o administrativo básico', erp: 'un ERP o CRM conectado', mezcla: 'una mezcla de Excel, papel y sistemas' }[a.datos] || 'sin dato';
+    const iaTxt = { nada: 'todavía no han usado IA', individual: 'la IA se usa de forma individual, sin un proceso del equipo', pilotos: 'ya probaron IA pero sin resultados medibles', resultados: 'ya tienen IA funcionando con resultados' }[a.ia] || '';
+    const lines = [
+      `Potencial ${r.potencial}/100: equipo de ${label('tamano', a.tamano).toLowerCase()} personas, ${horasTxt} en tareas repetitivas y ${areasTxt}.`,
+      `Preparación ${r.preparacion}/100: su información vive en ${datosTxt} y ${iaTxt}.`,
+      `Con potencial ${r.potencial >= 50 ? 'alto' : 'bajo'} y preparación ${r.preparacion >= 50 ? 'alta' : 'baja'}, el perfil es "${PROFILES[r.profileKey].name}": ${PROFILES[r.profileKey].desc}`,
+    ];
+    if (r.hours) lines.push(`Las horas recuperables (${r.hours[0]}–${r.hours[1]} h/mes) se estiman con un 30–45 % de automatización sobre las horas que reportaste; las validamos con tu operación real en la sesión.`);
+    return lines.join('\n\n');
+  }
+
   async function sendToHubSpot(payload, r) {
     const f = (name, value, objectTypeId = '0-1') => ({ objectTypeId, name, value: String(value) });
     const utmText = Object.entries(payload.utm).map(([k, v]) => `${k}=${v}`).join(' · ') || 'sin UTM';
@@ -351,7 +368,9 @@
       f('sac_diag_preparacion', r.preparacion),
       f('sac_diag_temperatura', r.temperatura),
       f('sac_diag_horas', r.hours ? `${r.hours[0]}–${r.hours[1]} h/mes` : 'No sabe'),
-      f('sac_diag_top3', r.top.map((k, n) => `${n + 1}. ${PROCESSES[k].title}`).join('\n')),
+      f('sac_diag_top3', r.top.map((k, n) => `${n + 1}) ${PROCESSES[k].title}. ${PROCESSES[k].desc}${PROCESSES[k].case ? ` (${PROCESSES[k].case}.)` : ''}`).join('\n\n')),
+      f('sac_diag_porque', explain(payload.answers, r)),
+      f('sac_diag_accion', PROCESSES[r.top[0]].tomorrow),
       f('sac_diag_dolor', payload.answers.dolor || '—'),
       f('sac_diag_variante', `${payload.variant} · ${utmText}`),
       f('sac_diag_respuestas', `${answersText(payload.answers)}\n\nConsentimiento aceptado: ${payload.fecha}`),
