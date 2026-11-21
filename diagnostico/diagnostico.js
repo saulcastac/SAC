@@ -2,9 +2,15 @@
    Pendiente de conectar: CONFIG.leadEndpoint (CRM/email), CONFIG.bookingUrl (Cal.com) y píxeles. */
 (() => {
   const CONFIG = {
-    leadEndpoint: '',          // p. ej. '/api/lead' (función de Vercel → Brevo/HubSpot). Vacío = modo prototipo.
-    bookingUrl: '',            // p. ej. 'https://cal.com/sac/radar-ia'. Vacío = aviso de prototipo.
+    // HubSpot Forms API (pública, sin llaves secretas). Ver docs/hubspot-diagnostico.md
+    hubspot: {
+      portalId: '52351349',    // Cuenta HubSpot "SAC"
+      formId: '1ff7b757-e186-4977-8121-fe5dba9ecabc', // formulario "Diagnóstico IA"
+      host: 'api.hsforms.com', // cuentas en la UE: 'api-eu1.hsforms.com'
+    },
+    bookingUrl: '',            // p. ej. enlace de reuniones de HubSpot o Cal.com. Vacío = aviso de prototipo.
   };
+  const HS_READY = !!(CONFIG.hubspot.portalId && CONFIG.hubspot.formId);
 
   /* ---------- Variantes de titular (message-match con cada reel/anuncio) ---------- */
   const VARIANTS = {
@@ -304,9 +310,8 @@
     btn.disabled = true;
     btn.firstChild.textContent = 'Preparando tu Radar… ';
     try {
-      if (CONFIG.leadEndpoint) {
-        const res = await fetch(CONFIG.leadEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-        if (!res.ok) throw new Error(res.status);
+      if (HS_READY) {
+        await sendToHubSpot(payload, result);
       } else {
         console.info('[Diagnóstico SAC · prototipo] Lead que se enviaría al CRM:', payload);
         try { localStorage.setItem('sac_diag_last', JSON.stringify(payload)); } catch (_) {}
@@ -318,6 +323,51 @@
     state.result = result;
     quiz.scrollTo(0, 0);
     render();
+  }
+
+  /* ---------- HubSpot ---------- */
+  // Convierte las respuestas en texto legible para el registro del contacto.
+  function answersText(a) {
+    return QUESTIONS.map((q) => {
+      let v = a[q.id];
+      if (v == null || v === '' || (Array.isArray(v) && !v.length)) v = '—';
+      else if (q.options) {
+        const label = (x) => (q.options.find(([k]) => k === x) || [x, x])[1];
+        v = Array.isArray(v) ? v.map(label).join(', ') : label(v);
+      }
+      return `${q.title}\n→ ${v}`;
+    }).join('\n\n');
+  }
+
+  async function sendToHubSpot(payload, r) {
+    const f = (name, value, objectTypeId = '0-1') => ({ objectTypeId, name, value: String(value) });
+    const utmText = Object.entries(payload.utm).map(([k, v]) => `${k}=${v}`).join(' · ') || 'sin UTM';
+    const fields = [
+      f('firstname', payload.nombre),
+      f('email', payload.email),
+      f('name', payload.empresa, '0-2'), // "Nombre de la empresa" del formulario = registro de Empresa
+      f('sac_diag_perfil', PROFILES[r.profileKey].name),
+      f('sac_diag_potencial', r.potencial),
+      f('sac_diag_preparacion', r.preparacion),
+      f('sac_diag_temperatura', r.temperatura),
+      f('sac_diag_horas', r.hours ? `${r.hours[0]}–${r.hours[1]} h/mes` : 'No sabe'),
+      f('sac_diag_top3', r.top.map((k, n) => `${n + 1}. ${PROCESSES[k].title}`).join('\n')),
+      f('sac_diag_dolor', payload.answers.dolor || '—'),
+      f('sac_diag_variante', `${payload.variant} · ${utmText}`),
+      f('sac_diag_respuestas', `${answersText(payload.answers)}\n\nConsentimiento aceptado: ${payload.fecha}`),
+    ];
+    if (payload.whatsapp) fields.push(f('phone', payload.whatsapp));
+    const hutk = (document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]+)/) || [])[1];
+    const body = {
+      submittedAt: Date.now(),
+      fields,
+      context: { pageUri: location.href, pageName: document.title, ...(hutk ? { hutk } : {}) },
+    };
+    const { host, portalId, formId } = CONFIG.hubspot;
+    const res = await fetch(`https://${host}/submissions/v3/integration/submit/${portalId}/${formId}`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+    });
+    if (!res.ok) throw new Error(`HubSpot ${res.status}: ${await res.text()}`);
   }
 
   /* ---------- Resultado ---------- */
@@ -355,7 +405,7 @@
         <a class="btn btn-dark" id="book" href="${esc(CONFIG.bookingUrl || '#')}" ${CONFIG.bookingUrl ? 'target="_blank" rel="noopener"' : ''}>Agendar 30 min <span aria-hidden="true">→</span></a>
       </div>
       <p class="sent">Te enviamos el reporte completo a <strong>${esc(state.lead.email)}</strong>.</p>
-      ${CONFIG.leadEndpoint || !/^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? '' : '<p class="dev-note">Prototipo: el lead no se envía a ningún lado todavía (queda en la consola y en este navegador). Falta conectar CRM/email, la agenda y los píxeles.</p>'}
+      ${HS_READY || !/^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? '' : '<p class="dev-note">Prototipo: el lead no se envía a ningún lado todavía (queda en la consola y en este navegador). Falta conectar CRM/email, la agenda y los píxeles.</p>'}
     </div>`;
     requestAnimationFrame(() => body.querySelectorAll('.score i').forEach((i) => { i.style.width = i.dataset.w + '%'; }));
     $('#book').addEventListener('click', (e) => {
