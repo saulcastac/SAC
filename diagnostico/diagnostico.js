@@ -8,7 +8,7 @@
       formId: '1ff7b757-e186-4977-8121-fe5dba9ecabc', // formulario "Diagnóstico IA"
       host: 'api.hsforms.com', // cuentas en la UE: 'api-eu1.hsforms.com'
     },
-    bookingUrl: '',            // p. ej. enlace de reuniones de HubSpot o Cal.com. Vacío = aviso de prototipo.
+    bookingUrl: 'https://meetings.hubspot.com/saulcastac', // enlace de reuniones de HubSpot
   };
   const HS_READY = !!(CONFIG.hubspot.portalId && CONFIG.hubspot.formId);
 
@@ -387,6 +387,16 @@
       </div>`;
     }).join('');
     const nombre = state.lead ? state.lead.nombre.split(' ')[0] : '';
+    // Agenda con nombre y email ya escritos (parámetros de prellenado de HubSpot Meetings)
+    let bookHref = CONFIG.bookingUrl;
+    if (bookHref && state.lead) {
+      const u = new URL(bookHref);
+      const [first, ...rest] = state.lead.nombre.split(/\s+/);
+      u.searchParams.set('firstname', first);
+      if (rest.length) u.searchParams.set('lastname', rest.join(' '));
+      u.searchParams.set('email', state.lead.email);
+      bookHref = u.toString();
+    }
     body.innerHTML = `<div class="step result">
       <p class="q-kicker">TU RADAR DE IA${nombre ? ' · ' + esc(nombre.toUpperCase()) : ''}</p>
       <h2 class="q-title">Perfil: ${esc(p.name)}</h2>
@@ -402,7 +412,7 @@
       <div class="cta-box">
         <h3>¿Lo aterrizamos juntos?</h3>
         <p>En 30 minutos revisamos tu Radar, validamos los números con tu operación y te decimos por dónde empezar. Sin costo.</p>
-        <a class="btn btn-dark" id="book" href="${esc(CONFIG.bookingUrl || '#')}" ${CONFIG.bookingUrl ? 'target="_blank" rel="noopener"' : ''}>Agendar 30 min <span aria-hidden="true">→</span></a>
+        <a class="btn btn-dark" id="book" href="${esc(bookHref || '#')}" ${CONFIG.bookingUrl ? 'target="_blank" rel="noopener"' : ''}>Agendar 30 min <span aria-hidden="true">→</span></a>
       </div>
       <p class="sent">Te enviamos el reporte completo a <strong>${esc(state.lead.email)}</strong>.</p>
       ${HS_READY || !/^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? '' : '<p class="dev-note">Prototipo: el lead no se envía a ningún lado todavía (queda en la consola y en este navegador). Falta conectar CRM/email, la agenda y los píxeles.</p>'}
