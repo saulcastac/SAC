@@ -170,6 +170,10 @@ body.locked{overflow:hidden}
 .cta-box h3{font-size:24px;letter-spacing:-.04em;margin-bottom:8px}
 .cta-box p{font-size:15px;line-height:1.55;color:#4d584e;margin-bottom:20px}
 .cta-box .btn{width:100%}
+.meetings-iframe-container{margin:4px -12px 0;min-height:640px;background:#fff;border-radius:8px;overflow:hidden}
+.meetings-iframe-container iframe{display:block;width:100%!important;border:0}
+.book-alt{margin:14px 0 0!important;font-size:13px!important;color:#6b746c!important;text-align:center}
+.book-alt a{color:var(--ink);font-weight:650}
 .sent{font-size:13px;color:#93a293;margin-top:18px;text-align:center}
 .dev-note{margin-top:28px;font-size:12px;line-height:1.5;color:#c9a96b;border:1px dashed #6b5a35;border-radius:6px;padding:12px}
 

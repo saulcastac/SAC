@@ -258,7 +258,7 @@
       <h2>Tu diagnóstico está listo.</h2>
       <p>¿A dónde te mandamos tu Radar de IA completo? Verás el resultado aquí mismo en cuanto continúes.</p>
       <form id="gate" novalidate>
-        <div class="field"><label for="f-nombre">Nombre</label><input id="f-nombre" name="nombre" autocomplete="given-name" required value="${esc(l.nombre || '')}" /><span class="err" id="e-nombre"></span></div>
+        <div class="field"><label for="f-nombre">Nombre y apellido</label><input id="f-nombre" name="nombre" autocomplete="name" required value="${esc(l.nombre || '')}" /><span class="err" id="e-nombre"></span></div>
         <div class="field"><label for="f-email">Email de trabajo</label><input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required value="${esc(l.email || '')}" /><span class="err" id="e-email"></span></div>
         <div class="field"><label for="f-empresa">Empresa</label><input id="f-empresa" name="empresa" autocomplete="organization" required value="${esc(l.empresa || '')}" /><span class="err" id="e-empresa"></span></div>
         <div class="field"><label for="f-whatsapp">WhatsApp <small>(opcional)</small></label><input id="f-whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="33 1234 5678" value="${esc(l.whatsapp || '')}" /></div>
@@ -397,6 +397,12 @@
       u.searchParams.set('email', state.lead.email);
       bookHref = u.toString();
     }
+    let embedSrc = '';
+    if (bookHref) {
+      const u = new URL(bookHref);
+      u.searchParams.set('embed', 'true');
+      embedSrc = u.toString();
+    }
     body.innerHTML = `<div class="step result">
       <p class="q-kicker">TU RADAR DE IA${nombre ? ' · ' + esc(nombre.toUpperCase()) : ''}</p>
       <h2 class="q-title">Perfil: ${esc(p.name)}</h2>
@@ -411,16 +417,41 @@
       <div class="tomorrow"><p class="r-label">HAZ ESTO MAÑANA</p><p>${esc(first.tomorrow)}</p></div>
       <div class="cta-box">
         <h3>¿Lo aterrizamos juntos?</h3>
-        <p>En 30 minutos revisamos tu Radar, validamos los números con tu operación y te decimos por dónde empezar. Sin costo.</p>
-        <a class="btn btn-dark" id="book" href="${esc(bookHref || '#')}" ${CONFIG.bookingUrl ? 'target="_blank" rel="noopener"' : ''}>Agendar 30 min <span aria-hidden="true">→</span></a>
+        <p>En 30 minutos revisamos tu Radar, validamos los números con tu operación y te decimos por dónde empezar. Sin costo. Elige tu horario aquí abajo.</p>
+        ${embedSrc
+          ? `<div class="meetings-iframe-container" data-src="${esc(embedSrc)}"></div>
+             <p class="book-alt">¿No se ve el calendario? <a id="book" href="${esc(bookHref)}" target="_blank" rel="noopener">Ábrelo en otra pestaña →</a></p>`
+          : `<a class="btn btn-dark" id="book" href="#">Agendar 30 min <span aria-hidden="true">→</span></a>`}
       </div>
       <p class="sent">Te enviamos el reporte completo a <strong>${esc(state.lead.email)}</strong>.</p>
       ${HS_READY || !/^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? '' : '<p class="dev-note">Prototipo: el lead no se envía a ningún lado todavía (queda en la consola y en este navegador). Falta conectar CRM/email, la agenda y los píxeles.</p>'}
     </div>`;
     requestAnimationFrame(() => body.querySelectorAll('.score i').forEach((i) => { i.style.width = i.dataset.w + '%'; }));
     $('#book').addEventListener('click', (e) => {
-      track('Schedule', { content_name: 'diagnostico_ia', perfil: r.profileKey });
-      if (!CONFIG.bookingUrl) { e.preventDefault(); alert('Prototipo: aquí se abrirá el calendario (Cal.com o Calendly).'); }
+      track('BookingLinkClick', { content_name: 'diagnostico_ia', perfil: r.profileKey });
+      if (!CONFIG.bookingUrl) { e.preventDefault(); alert('Prototipo: aquí se abrirá el calendario.'); }
     });
+    if (embedSrc) loadMeetingsEmbed();
   }
+
+  /* ---------- Calendario de HubSpot incrustado ---------- */
+  // El script oficial busca .meetings-iframe-container al cargar; se vuelve a insertar en cada render.
+  function loadMeetingsEmbed() {
+    const old = document.getElementById('hs-meetings-embed');
+    if (old) old.remove();
+    const s = document.createElement('script');
+    s.id = 'hs-meetings-embed';
+    s.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+    s.async = true;
+    document.body.appendChild(s);
+  }
+
+  // Reserva confirmada: HubSpot avisa por postMessage. Aquí sí se mide "Schedule" (cita real, no clic).
+  let booked = false;
+  window.addEventListener('message', (e) => {
+    if (!/^https:\/\/([a-z0-9-]+\.)*hubspot\.com$/.test(e.origin)) return;
+    if (!e.data || !e.data.meetingBookSucceeded || booked) return;
+    booked = true;
+    track('Schedule', { content_name: 'diagnostico_ia', perfil: state.result && state.result.profileKey });
+  });
 })();
