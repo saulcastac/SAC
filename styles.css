@@ -144,6 +144,11 @@
 .service-faq summary { cursor: pointer; padding: 25px 24px 25px 0; font-size: 18px; line-height: 1.5; font-weight: 600; }
 .service-faq summary::marker { color: #365c2e; }
 .service-faq details p { font-size: 16px; line-height: 1.75; padding-bottom: 26px; color: #596359; }
+.service-faq .faq-prices { list-style: none; margin: -10px 0 22px; padding: 0; display: grid; gap: 12px; }
+.service-faq .faq-prices li { font-size: 16px; line-height: 1.65; color: #596359; padding-left: 22px; position: relative; }
+.service-faq .faq-prices li::before { content: ""; position: absolute; left: 0; top: .62em; width: 9px; height: 9px; border-radius: 50%; background: #a4f47b; border: 2px solid #101312; }
+.service-faq .faq-prices strong { color: #101312; }
+.service-faq details p a { color: #101312; font-weight: 600; }
 summary:focus-visible { outline: 3px solid #6bd034; outline-offset: 4px; }
 .service-page .contact-copy h2 { font-size: clamp(38px, 4vw, 62px); letter-spacing: -.055em; }
 .service-page .contact-copy .contact-reassurance { font-size: 16px; margin-top: 22px; }
