@@ -352,12 +352,18 @@
       `Preparación ${r.preparacion}/100: su información vive en ${datosTxt} y ${iaTxt}.`,
       `Con potencial ${r.potencial >= 50 ? 'alto' : 'bajo'} y preparación ${r.preparacion >= 50 ? 'alta' : 'baja'}, el perfil es "${PROFILES[r.profileKey].name}": ${PROFILES[r.profileKey].desc}`,
     ];
-    if (r.hours) lines.push(`Las horas recuperables (${r.hours[0]}–${r.hours[1]} h/mes) se estiman con un 30–45 % de automatización sobre las horas que reportaste; las validamos con tu operación real en la sesión.`);
-    return lines.join('\n\n');
+    if (r.hours) lines[2] += ` Las horas recuperables (${r.hours[0]}–${r.hours[1]} h/mes) se estiman con un 30–45 % de automatización sobre las horas que reportaste; las validamos con tu operación real en la sesión.`;
+    return lines; // [potencial, preparación, perfil + horas]
   }
+
+  const processText = (k, n) => {
+    const pr = PROCESSES[k];
+    return `${n + 1}) ${pr.title}. ${pr.desc}${pr.case ? ` (${pr.case}.)` : ''}`;
+  };
 
   async function sendToHubSpot(payload, r) {
     const f = (name, value, objectTypeId = '0-1') => ({ objectTypeId, name, value: String(value) });
+    const why = explain(payload.answers, r);
     const utmText = Object.entries(payload.utm).map(([k, v]) => `${k}=${v}`).join(' · ') || 'sin UTM';
     const fields = [
       ...(() => {
@@ -371,8 +377,13 @@
       f('sac_diag_preparacion', r.preparacion),
       f('sac_diag_temperatura', r.temperatura),
       f('sac_diag_horas', r.hours ? `${r.hours[0]}–${r.hours[1]} h/mes` : 'No sabe'),
-      f('sac_diag_top3', r.top.map((k, n) => `${n + 1}) ${PROCESSES[k].title}. ${PROCESSES[k].desc}${PROCESSES[k].case ? ` (${PROCESSES[k].case}.)` : ''}`).join('\n\n')),
-      f('sac_diag_porque', explain(payload.answers, r)),
+      f('sac_diag_top3', r.top.map(processText).join('\n\n')),
+      f('sac_diag_porque', why.join('\n\n')),
+      // Versiones separadas para el correo (HubSpot quita los saltos de línea al insertar una propiedad)
+      f('sac_diag_porque_potencial', why[0]),
+      f('sac_diag_porque_preparacion', why[1]),
+      f('sac_diag_porque_perfil', why[2]),
+      ...r.top.map((k, n) => f(`sac_diag_proceso${n + 1}`, processText(k, n))),
       f('sac_diag_accion', PROCESSES[r.top[0]].tomorrow),
       f('sac_diag_dolor', payload.answers.dolor || '—'),
       f('sac_diag_variante', `${payload.variant} · ${utmText}`),
@@ -445,7 +456,7 @@
              <p class="book-alt">¿No se ve el calendario? <a id="book" href="${esc(bookHref)}" target="_blank" rel="noopener">Ábrelo en otra pestaña →</a></p>`
           : `<a class="btn btn-dark" id="book" href="#">Agendar 30 min <span aria-hidden="true">→</span></a>`}
       </div>
-      <p class="sent">Te enviamos el reporte completo a <strong>${esc(state.lead.email)}</strong>.</p>
+      <p class="sent">Te enviamos el reporte completo a <strong>${esc(state.lead.email)}</strong>.<br />Si no lo ves en 5 minutos, revisa tu carpeta de spam o promociones.</p>
       ${HS_READY || !/^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? '' : '<p class="dev-note">Prototipo: el lead no se envía a ningún lado todavía (queda en la consola y en este navegador). Falta conectar CRM/email, la agenda y los píxeles.</p>'}
     </div>`;
     requestAnimationFrame(() => body.querySelectorAll('.score i').forEach((i) => { i.style.width = i.dataset.w + '%'; }));
