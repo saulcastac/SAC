@@ -342,7 +342,9 @@
   // Explica en lenguaje simple qué respuestas movieron cada puntaje (va al correo del reporte).
   function explain(a, r) {
     const label = (id, v) => { const q = QUESTIONS.find((x) => x.id === id); return ((q.options || []).find(([k]) => k === v) || [v, v])[1]; };
-    const areas = (a.areas || []).map((v) => label('areas', v).toLowerCase());
+    // Primera letra en minúscula, salvo siglas ("RH y nómina" se queda igual)
+    const lc = (s) => (/^[A-ZÁÉÍÓÚÑ]{2}/.test(s) ? s : s.charAt(0).toLowerCase() + s.slice(1));
+    const areas = (a.areas || []).map((v) => lc(label('areas', v)));
     const areasTxt = areas.length ? `${areas.length === 1 ? 'un área que les quita' : areas.length + ' áreas que les quitan'} tiempo (${areas.join(', ')})` : 'sin un área crítica identificada';
     const horasTxt = { '<5': 'menos de 5 h/semana', '5-20': 'entre 5 y 20 h/semana', '20-50': 'entre 20 y 50 h/semana', '50+': 'más de 50 h/semana', nose: 'horas aún sin medir' }[a.horas] || 'horas sin dato';
     const datosTxt = { excel: 'Excel y papel', basico: 'un sistema contable o administrativo básico', erp: 'un ERP o CRM conectado', mezcla: 'una mezcla de Excel, papel y sistemas' }[a.datos] || 'sin dato';
@@ -350,7 +352,7 @@
     const lines = [
       `Potencial ${r.potencial}/100: equipo de ${label('tamano', a.tamano).toLowerCase()} personas, ${horasTxt} en tareas repetitivas y ${areasTxt}.`,
       `Preparación ${r.preparacion}/100: su información vive en ${datosTxt} y ${iaTxt}.`,
-      `Con potencial ${r.potencial >= 50 ? 'alto' : 'bajo'} y preparación ${r.preparacion >= 50 ? 'alta' : 'baja'}, el perfil es "${PROFILES[r.profileKey].name}": ${PROFILES[r.profileKey].desc}`,
+      `Con potencial ${r.potencial >= 50 ? 'alto' : 'bajo'} y preparación ${r.preparacion >= 50 ? 'alta' : 'baja'}, el perfil es "${PROFILES[r.profileKey].name}": ${lc(PROFILES[r.profileKey].desc)}`,
     ];
     if (r.hours) lines[2] += ` Las horas recuperables (${r.hours[0]}–${r.hours[1]} h/mes) se estiman con un 30–45 % de automatización sobre las horas que reportaste; las validamos con tu operación real en la sesión.`;
     return lines; // [potencial, preparación, perfil + horas]
