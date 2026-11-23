@@ -126,10 +126,8 @@
   function track(event, data = {}) {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event, ...data });
-    if (typeof window.fbq === 'function') {
-      const std = { ViewContent: 1, Lead: 1, Schedule: 1 };
-      window.fbq(std[event] ? 'track' : 'trackCustom', event, data);
-    }
+    // Meta Pixel vía /tracking.js: respeta el consentimiento y guarda en cola hasta que se decida.
+    if (typeof window.SACTrack === 'function') window.SACTrack(event, data);
     if (typeof window.gtag === 'function') window.gtag('event', event, data);
   }
 

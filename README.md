@@ -88,7 +88,15 @@ Para activar medición en el futuro:
 5. En cada página, el gestor debe llamar `window.SACAnalytics.setConsent(true)` únicamente cuando tenga consentimiento válido; al rechazar o revocar, llamar con `false` y detener también el proveedor. El puente no persiste el consentimiento ni lo deduce del formulario.
 6. Probar consentimiento, rechazo, revocación y deduplicación con identificadores reales autorizados, en preview.
 
-No habilitar proveedores por el solo hecho de añadir un Pixel ID. La configuración actual permanece deshabilitada.
+### Meta Pixel (`tracking.js`)
+
+`tracking.js` implementa el gestor de consentimiento y el adaptador de Meta. Se carga antes de `analytics.js` y de `diagnostico.js` en todas las páginas (también en la plantilla de `build_services.py`).
+
+- Con `PIXEL_ID = ''` no hace nada: sin banner, sin red, sin cookies, y el botón «Cookies» del pie sigue oculto.
+- Con un Pixel ID: banner con «Aceptar» y «Rechazar» del mismo peso; la elección se guarda 180 días en `localStorage` (`sac:consent:v1`) y se cambia desde cualquier `[data-cookie-settings]`. Solo al aceptar se carga `fbevents.js`; al rechazar se revoca y se borran `_fbp`/`_fbc`.
+- Habilita `SAC_ANALYTICS_CONFIG` y llama `SACAnalytics.setConsent()`. Traducción: `contact_completed` → `Lead` (`content_name: contacto_<servicio>`), `whatsapp_click` → `Contact`, `cta_click` → `CTAClick`.
+- Diagnóstico: `track()` usa `window.SACTrack` → `ViewContent`, `StartDiagnostic`, `Lead`, `BookingLinkClick`, `Schedule` (cita confirmada por HubSpot). Los eventos previos a la decisión quedan en cola y se envían solo si se acepta.
+- Nunca se envían nombre, correo, teléfono, empresa ni respuestas. Pendiente: API de Conversiones (servidor) y deduplicación por `event_id`.
 
 ## Evidencia y privacidad
 
