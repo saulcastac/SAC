@@ -35,6 +35,14 @@
     {
       "source": "/servicios/desarrollo-web",
       "destination": "/servicios/desarrollo-web.html"
+    },
+    {
+      "source": "/mapa-ia",
+      "destination": "/mapa-ia.html"
+    },
+    {
+      "source": "/trabajo",
+      "destination": "/trabajo.html"
     }
   ],
   "redirects": [
