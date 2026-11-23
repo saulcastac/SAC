@@ -175,6 +175,11 @@ body.locked{overflow:hidden}
 .book-alt{margin:14px 0 0!important;font-size:13px!important;color:#6b746c!important;text-align:center}
 .book-alt a{color:var(--ink);font-weight:650}
 .sent{font-size:13px;color:#93a293;margin-top:18px;text-align:center}
+.mail-note{display:grid;gap:6px;margin:0 0 22px;padding:14px 16px;border-radius:8px;border:1px solid rgba(164,244,123,.45);background:rgba(164,244,123,.1);font-size:14px;line-height:1.5;color:#c9d3ca}
+.mail-note b{color:var(--lime);font-size:15px}
+.mail-note strong{color:var(--paper)}
+.mail-note.warn{border-color:rgba(242,193,78,.55);background:rgba(242,193,78,.1)}
+.mail-note.warn b{color:#f2c14e}
 .dev-note{margin-top:28px;font-size:12px;line-height:1.5;color:#c9a96b;border:1px dashed #6b5a35;border-radius:6px;padding:12px}
 
 @media(max-width:820px){

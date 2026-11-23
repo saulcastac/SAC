@@ -254,7 +254,7 @@
     body.innerHTML = `<div class="step gate">
       <p class="q-kicker">ÚLTIMO PASO</p>
       <h2>Tu diagnóstico está listo.</h2>
-      <p>¿A dónde te mandamos tu Radar de IA completo? Verás el resultado aquí mismo en cuanto continúes.</p>
+      <p>Verás tu Radar de IA <strong>aquí mismo</strong> en cuanto continúes. También te mandamos una copia por correo; a veces llega a <strong>spam o promociones</strong>.</p>
       <form id="gate" novalidate>
         <div class="field"><label for="f-nombre">Nombre y apellido</label><input id="f-nombre" name="nombre" autocomplete="name" required value="${esc(l.nombre || '')}" /><span class="err" id="e-nombre"></span></div>
         <div class="field"><label for="f-email">Email de trabajo</label><input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required value="${esc(l.email || '')}" /><span class="err" id="e-email"></span></div>
@@ -307,6 +307,7 @@
     const btn = $('#gate-submit');
     btn.disabled = true;
     btn.firstChild.textContent = 'Preparando tu Radar… ';
+    state.emailOk = true;
     try {
       if (HS_READY) {
         await sendToHubSpot(payload, result);
@@ -315,6 +316,7 @@
         try { localStorage.setItem('sac_diag_last', JSON.stringify(payload)); } catch (_) {}
       }
     } catch (err) {
+      state.emailOk = false;
       console.warn('No se pudo registrar el lead', err); // se muestra el resultado de todos modos
     }
     track('Lead', { content_name: 'diagnostico_ia', perfil: result.profileKey, temperatura: result.temperatura, variant });
@@ -404,6 +406,17 @@
   }
 
   /* ---------- Resultado ---------- */
+  // Aviso visible sobre la copia por correo (el remitente aún no tiene dominio propio y puede caer en spam).
+  function mailNote() {
+    const email = state.lead ? esc(state.lead.email) : '';
+    if (state.emailOk === false) {
+      return `<div class="mail-note warn" role="status"><b>Tu resultado está aquí abajo 👇</b>
+        <span>No pudimos enviarte la copia por correo. Toma captura de esta pantalla o escríbenos por WhatsApp y te la mandamos.</span></div>`;
+    }
+    return `<div class="mail-note" role="status"><b>Tu resultado está aquí abajo 👇</b>
+      <span>También te enviamos una copia a <strong>${email}</strong>. Puede tardar unos minutos y a veces llega a <strong>spam o promociones</strong>: si la encuentras ahí, márcala como “No es spam” para recibir nuestros siguientes correos.</span></div>`;
+  }
+
   function renderResult() {
     const r = state.result, p = PROFILES[r.profileKey];
     setProgress(1, 1, 'Resultado');
@@ -438,6 +451,7 @@
     }
     body.innerHTML = `<div class="step result">
       <p class="q-kicker">TU RADAR DE IA${nombre ? ' · ' + esc(nombre.toUpperCase()) : ''}</p>
+      ${mailNote()}
       <h2 class="q-title">Perfil: ${esc(p.name)}</h2>
       <p class="profile-desc">${esc(p.desc)}</p>
       <div class="scores">
@@ -456,7 +470,6 @@
              <p class="book-alt">¿No se ve el calendario? <a id="book" href="${esc(bookHref)}" target="_blank" rel="noopener">Ábrelo en otra pestaña →</a></p>`
           : `<a class="btn btn-dark" id="book" href="#">Agendar 30 min <span aria-hidden="true">→</span></a>`}
       </div>
-      <p class="sent">Te enviamos el reporte completo a <strong>${esc(state.lead.email)}</strong>.<br />Si no lo ves en 5 minutos, revisa tu carpeta de spam o promociones.</p>
       ${HS_READY || !/^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? '' : '<p class="dev-note">Prototipo: el lead no se envía a ningún lado todavía (queda en la consola y en este navegador). Falta conectar CRM/email, la agenda y los píxeles.</p>'}
     </div>`;
     requestAnimationFrame(() => body.querySelectorAll('.score i').forEach((i) => { i.style.width = i.dataset.w + '%'; }));
