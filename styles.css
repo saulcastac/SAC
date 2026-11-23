@@ -209,6 +209,15 @@ summary:focus-visible { outline: 3px solid #6bd034; outline-offset: 4px; }
 .proof-names { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 34px; }
 .proof-names li { font-size: clamp(17px, 1.6vw, 22px); font-weight: 750; letter-spacing: -.04em; }
 .proof-names small { font-size: 11px; font-weight: 600; letter-spacing: .2px; color: #3c5d32; margin-left: 4px; }
+.proof-logos { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 18px 48px; }
+.proof-logos li { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
+.proof-logos img { display: block; width: auto; }
+.proof-logos .logo-fli { height: 64px; }
+.proof-logos .logo-vax { height: 50px; }
+.proof-logos .logo-rtc { height: 38px; }
+.proof-logos .logo-rga { height: 60px; }
+.proof-logos small { font-size: 11px; font-weight: 650; letter-spacing: .3px; color: #3c5d32; }
+.proof-text span { font-size: 21px; font-weight: 800; letter-spacing: -.04em; line-height: 1.1; }
 .steps-home .section-top { border-color: #38423b; }
 .steps-home .tiny-index { color: #87978a; }
 .steps-home h2 em { color: var(--accent); }
@@ -313,6 +322,12 @@ summary:focus-visible { outline: 3px solid #6bd034; outline-offset: 4px; }
   .case-card, .offer-card { padding: 24px 22px; }
   .proof-strip-inner { gap: 12px; padding: 18px 0; }
   .proof-names { gap: 6px 22px; }
+  .proof-logos { gap: 18px 28px; }
+  .proof-logos .logo-fli { height: 40px; }
+  .proof-logos .logo-vax { height: 32px; }
+  .proof-logos .logo-rtc { height: 24px; }
+  .proof-logos .logo-rga { height: 38px; }
+  .proof-text span { font-size: 17px; }
   .mapa-price { padding: 64px 0; }
   .mapa-guarantee { padding: 24px 22px; }
 }
