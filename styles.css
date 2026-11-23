@@ -247,6 +247,9 @@ summary:focus-visible { outline: 3px solid #6bd034; outline-offset: 4px; }
 .case-card-dark .case-result strong { color: var(--accent); }
 .case-card-dark .case-result small { color: #a9b8aa; }
 .cases-more { margin-top: 30px; }
+.case-shot { margin: 6px 0 0; }
+.case-shot img { display: block; width: 100%; height: auto; border: 1px solid #c9cfc4; border-radius: 6px; box-shadow: 0 14px 30px #1b282214; }
+.case-shot figcaption { font-size: 12px; color: #7a847a; margin-top: 8px; }
 .founder { background: var(--paper); }
 .founder-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 7%; align-items: center; }
 .founder-photo { margin: 0; }
