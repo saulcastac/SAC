@@ -36,5 +36,18 @@
       "source": "/servicios/desarrollo-web",
       "destination": "/servicios/desarrollo-web.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/:path(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.saacstudio.com"
+        }
+      ],
+      "destination": "https://saacstudio.com/:path",
+      "permanent": true
+    }
   ]
 }
