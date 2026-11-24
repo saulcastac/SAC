@@ -73,7 +73,7 @@ if (form) {
 // Preserve explicit campaign parameters when a visitor explores another service.
 document.querySelectorAll('a[href]').forEach(link => {
   const url = new URL(link.href, window.location.href);
-  if (url.origin !== window.location.origin || !url.pathname.startsWith('/servicios/')) return;
+  if (url.origin !== window.location.origin || !(url.pathname.startsWith('/servicios/') || url.pathname === '/direccion-ia')) return;
   utmKeys.forEach(key => {
     if (campaign.has(key)) url.searchParams.set(key, campaign.get(key).slice(0, 200));
   });

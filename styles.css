@@ -338,3 +338,213 @@ summary:focus-visible { outline: 3px solid #6bd034; outline-offset: 4px; }
   .hero h1.hero-title-long { font-size: clamp(42px, 12.4vw, 56px); }
   .case-result strong { font-size: 28px; }
 }
+
+/* ===== Dirección de IA externa (Fractional CAIO): homepage, servicio y landing de campañas ===== */
+select{font:inherit;font-size:16px;padding:15px 30px 15px 2px;border:0;border-bottom:1px solid #c4cec0;border-radius:0;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23394638' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 6px center;color:#1b271c;appearance:none;-webkit-appearance:none;width:100%;outline:none}
+select:focus{border-bottom-color:#44813a}
+select:focus-visible{outline:3px solid #6bd034;outline-offset:4px}
+select:invalid{color:#6b766b}
+.caio-form-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+.caio-form-row>div{display:flex;flex-direction:column;gap:9px}
+.caio-page .contact-form-wrap .button span{font-size:17px}
+
+/* Ciclo continuo (compartido) */
+.caio-cycle-panel{position:relative;background:#101312;color:#f5f6f1;border:1px solid #303c32;padding:24px}
+.caio-cycle-panel:before{content:'';position:absolute;top:-1px;left:-1px;width:55px;height:3px;background:var(--accent)}
+.caio-cycle-head,.caio-cycle-foot{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:1.6px;color:#8d9e8d;font-weight:700}
+.caio-cycle-foot{justify-content:center;gap:12px;margin-top:6px}
+.caio-cycle{--r:39%;position:relative;width:min(100%,440px);aspect-ratio:1;margin:6px auto 0}
+.caio-cycle-ring{position:absolute;inset:calc(50% - var(--r));border:1px dashed #4a5e4d;border-radius:50%;animation:caio-spin 10s linear infinite}
+.caio-cycle-runner{position:absolute;top:-6px;left:calc(50% - 6px);width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 18px var(--accent)}
+.caio-cycle-center{position:absolute;inset:31%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;border-radius:50%;background:radial-gradient(circle,#202a23,#121815 72%);border:1px solid #3a483e}
+.caio-cycle-center small{font-size:9px;letter-spacing:1.6px;color:#adb9aa;font-weight:700}
+.caio-cycle-center strong{font-size:clamp(18px,2vw,26px);line-height:1.1;letter-spacing:-.04em}
+.caio-cycle-nodes{list-style:none;margin:0;padding:0}
+.caio-cycle-nodes li{position:absolute;left:calc(50% + var(--cx) * var(--r));top:calc(50% + var(--cy) * var(--r));transform:translate(-50%,-50%);background:#101312;border:1px solid #58705b;color:#e6ece2;padding:9px 14px;border-radius:999px;font-size:13px;font-weight:650;white-space:nowrap;animation:caio-node 10s infinite}
+.caio-cycle-nodes li:nth-child(1){--cx:0;--cy:-1;animation-delay:0s}
+.caio-cycle-nodes li:nth-child(2){--cx:.951;--cy:-.309;animation-delay:2s}
+.caio-cycle-nodes li:nth-child(3){--cx:.588;--cy:.809;animation-delay:4s}
+.caio-cycle-nodes li:nth-child(4){--cx:-.588;--cy:.809;animation-delay:6s}
+.caio-cycle-nodes li:nth-child(5){--cx:-.951;--cy:-.309;animation-delay:8s}
+@keyframes caio-spin{to{transform:rotate(360deg)}}
+@keyframes caio-node{0%,16%{background:var(--accent);color:#101312;border-color:var(--accent)}22%,100%{background:#101312;color:#e6ece2;border-color:#58705b}}
+
+/* Sección en homepage */
+.caio-home{background:var(--paper)}
+.caio-home .section-top{border-color:#cfd3ca}
+.caio-home-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:72px;align-items:center;margin-top:52px}
+.caio-eyebrow{font-size:11px;letter-spacing:2px;font-weight:800;color:#4d753e}
+.caio-home h2{font-size:clamp(40px,4.4vw,72px);line-height:1.03;letter-spacing:-.065em;font-weight:700;margin:22px 0 26px}
+.caio-home h2 em{font-style:normal;color:#4d753e}
+.caio-home h2 em:after{content:"";display:block;width:96px;height:6px;background:var(--accent);margin-top:22px}
+.caio-home-text{font-size:18px;line-height:1.65;color:#4b554c;max-width:580px}
+.caio-capabilities{list-style:none;padding:0;margin:32px 0 6px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:28px;border-top:1px solid #cfd3ca}
+.caio-capabilities li{display:flex;gap:12px;padding:16px 0;border-bottom:1px solid #cfd3ca;font-size:16px;font-weight:600;line-height:1.4}
+.caio-capabilities span{font-size:11px;color:#4d753e;font-weight:800;padding-top:3px}
+.caio-home .button-dark{margin-top:30px;gap:18px}
+.caio-home-note{font-size:13px;color:#6b766b;margin-top:16px}
+
+/* Hero de servicio y landing */
+.caio-pilot-line{margin-top:22px;font-size:16px;line-height:1.6;color:#d5ded2}
+.caio-pilot-line strong{color:var(--accent)}
+.caio-hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:16px 30px;margin-top:30px}
+.service-hero .caio-hero-actions .button{margin-top:0}
+.caio-hero .service-hero-grid{grid-template-columns:minmax(0,1.25fr) minmax(0,.95fr)}
+
+/* Problema */
+.caio-problems article{position:relative}
+.caio-quote-mark{display:block;font-size:56px;line-height:.6;color:#4d753e;font-weight:700;margin-bottom:12px}
+
+/* Qué recibes cada mes */
+.caio-components{background:#e8ece2}
+.caio-comp-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:20px;margin-top:50px}
+.caio-comp-num{display:block;font-size:13px;font-weight:800;letter-spacing:1px;color:#4d753e}
+.caio-comp h3{font-size:24px;line-height:1.2;letter-spacing:-.035em;margin:14px 0 12px}
+.caio-comp p{font-size:16px;line-height:1.7;color:#596359}
+.caio-tag{display:inline-block;margin-top:18px;font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;border:1px solid #b8c2b3;padding:6px 10px;color:#394638}
+.caio-comp-lead{padding:36px;display:flex;flex-direction:column;justify-content:flex-end;min-height:340px}
+.caio-comp-lead .caio-comp-num{color:var(--accent)}
+.caio-comp-lead h3{font-size:clamp(30px,3vw,46px);margin-top:auto;padding-top:60px}
+.caio-comp-lead p{color:#c3cec3;font-size:18px}
+.caio-comp-lead .caio-tag,.caio-tag-dark{border-color:#58705b;color:#cfe0c9}
+.caio-comp-lead .caio-tag{align-self:flex-start}
+.caio-comp-roadmap{background:#fff;border:1px solid #d3d9cd;padding:32px;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:28px;align-items:start}
+.caio-roadmap{margin:0}
+.caio-roadmap figcaption{font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:#737974;font-weight:700;margin-bottom:10px}
+.caio-table-wrap{overflow-x:auto}
+.caio-roadmap table{width:100%;border-collapse:collapse;font-size:14px;min-width:380px}
+.caio-roadmap th{text-align:left;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#737974;font-weight:700;padding:0 8px 10px 0}
+.caio-roadmap td{border-top:1px solid #e1e5dc;padding:12px 8px 12px 0;vertical-align:middle}
+.caio-pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700}
+.caio-pill-hi{background:var(--accent);color:#101312}
+.caio-pill-md{background:#e3e7dd;color:#394638}
+.caio-comp-row{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink);margin-top:20px}
+.caio-comp-small{padding:28px 28px 8px}
+.caio-comp-small:first-child{padding-left:0}
+.caio-comp-small+.caio-comp-small{border-left:1px solid #c6cec0}
+.caio-scope-note{margin-top:36px;max-width:860px;border-left:2px solid var(--ink);padding-left:20px;font-size:16px;line-height:1.65;color:#31392f}
+
+/* Cómo funciona */
+.caio-moments{list-style:none;margin:48px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.caio-moments li{position:relative;border-top:1px solid #425545;padding-top:30px}
+.caio-moments li:before{content:'';position:absolute;top:-6px;left:0;width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px #a4f47b88}
+.caio-moment-num{display:block;font-size:13px;color:var(--accent);font-weight:700;margin-bottom:16px}
+.caio-moments h3{font-size:28px;letter-spacing:-.04em;margin-bottom:12px}
+.caio-moments p{font-size:16px;line-height:1.7;color:#b9c9bc}
+.caio-month{margin-top:72px;border:1px solid #425545;padding:32px}
+.caio-month-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.caio-month-head h3{font-size:clamp(24px,2.4vw,34px);letter-spacing:-.04em}
+.caio-month-head .caio-tag{margin-top:0}
+.caio-weeks{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.caio-weeks li{background:#19231c;border:1px solid #2f3d32;padding:22px}
+.caio-weeks span{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);font-weight:700}
+.caio-weeks h4{font-size:18px;line-height:1.3;letter-spacing:-.02em;margin:12px 0 8px}
+.caio-weeks p{font-size:15px;line-height:1.6;color:#b9c9bc;margin:0}
+.caio-month-note{margin-top:20px;font-size:14px;color:#9fae9f}
+.caio-pilot{margin-top:72px;background:var(--accent);color:var(--ink);padding:44px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;scroll-margin-top:96px}
+.caio-pilot .eyebrow{color:#31502a}
+.caio-pilot h3{font-size:clamp(30px,3.2vw,48px);line-height:1.05;letter-spacing:-.055em;margin:16px 0 18px}
+.caio-pilot p{font-size:17px;line-height:1.65;color:#22361d}
+.caio-route{list-style:none;margin:0;padding:0}
+.caio-route li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;border-top:1px solid #31502a55;padding:16px 0;font-size:18px;font-weight:600;letter-spacing:-.02em}
+.caio-route li:last-child{border-bottom:1px solid #31502a55}
+.caio-route span{font-size:12px;font-weight:800;letter-spacing:1px;padding-top:4px}
+.caio-pilot .caio-pilot-terms{font-size:13px;margin-top:16px;color:#31502a}
+
+/* Evidencia */
+.caio-evidence-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:8%;align-items:end}
+.caio-evidence-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:20px;margin-top:48px}
+.caio-ev-col{border:1px solid #58705b;padding:32px}
+.caio-ev-kicker{display:block;font-size:11px;letter-spacing:1.6px;font-weight:800;color:var(--accent);margin-bottom:12px}
+.caio-roles{list-style:none;margin:0;padding:0}
+.caio-roles li{border-top:1px solid #425545;padding:20px 0}
+.caio-roles span{font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:#b9cbb8;font-weight:700}
+.caio-evidence .caio-roles p{font-size:18px;line-height:1.55;color:#eef2eb;margin-top:8px}
+.caio-evidence .caio-ev-note{font-size:14px;color:#9fae9f;margin-top:16px}
+.caio-ev-auto .evidence-numbers strong{font-size:clamp(44px,4.6vw,70px)}
+.caio-insight{margin:56px 0 0;border-left:3px solid var(--accent);padding-left:28px;max-width:1000px}
+.caio-evidence .caio-insight p{font-size:clamp(26px,2.9vw,42px);line-height:1.2;letter-spacing:-.04em;color:#fff}
+
+/* Para quién */
+.caio-audience-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8%;align-items:start}
+.caio-audience-list{list-style:none;margin:0;padding:0}
+.caio-audience-list li{position:relative;padding:20px 0 20px 38px;border-top:1px solid #b8c2b3;font-size:20px;line-height:1.4;letter-spacing:-.02em;font-weight:600}
+.caio-audience-list li:last-child{border-bottom:1px solid #b8c2b3}
+.caio-audience-list li:before{content:'→';position:absolute;left:0;top:20px;color:#4d753e}
+.caio-pricing{margin-top:32px;background:#101312;color:#f5f6f1;padding:30px}
+.caio-pricing .section-label{color:var(--accent)}
+.caio-pricing .caio-pricing-main{font-size:22px;line-height:1.35;letter-spacing:-.025em;font-weight:600;margin:12px 0 10px;color:#fff}
+.caio-pricing p{font-size:15px;line-height:1.6;color:#b9c9bc}
+.caio-alt-path{margin-top:22px;font-size:15px;color:#31502a}
+.caio-alt-path a{text-decoration:underline;text-underline-offset:4px;font-weight:600}
+
+/* Landing de campañas */
+.lp-header .nav-cta{font-size:13px;padding:12px 16px}
+.caio-lp-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:56px;align-items:start;padding:56px 0 80px}
+.caio-lp-hero h1{font-size:clamp(40px,4.3vw,68px)}
+.caio-lp-points{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:12px}
+.caio-lp-points li{position:relative;padding-left:28px;font-size:16px;line-height:1.5;color:#d5ded2}
+.caio-lp-points li:before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700}
+.caio-lp-form{color:var(--ink);scroll-margin-top:96px}
+.caio-lp-jump{display:none}
+.caio-lp-close{background:var(--accent);padding:88px 0}
+.caio-lp-close-inner{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:56px;align-items:end}
+.caio-lp-close h2{font-size:clamp(34px,4vw,60px);line-height:1.05;letter-spacing:-.06em;margin:22px 0 18px}
+.caio-lp-close h2 em{font-style:normal;color:#4d753e}
+.caio-lp-close p{font-size:18px;line-height:1.6;color:#31502a;max-width:620px}
+.caio-lp-close-actions{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.caio-lp-close-actions .button-dark{margin-top:0;gap:18px}
+.caio-lp-close-actions .text-link{color:#172117}
+.caio-lp-footer{padding:28px 0}
+.caio-lp-footer .footer-bottom{border-top:0;padding-top:0}
+
+@media (max-width:1100px){
+  .caio-comp-grid{grid-template-columns:minmax(0,1fr)}
+  .caio-comp-lead{min-height:0}
+  .caio-comp-lead h3{padding-top:24px}
+  .caio-weeks{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:1000px){
+  .caio-home-grid,.caio-lp-grid,.caio-evidence-top,.caio-evidence-grid,.caio-audience-grid,.caio-pilot,.caio-lp-close-inner{grid-template-columns:minmax(0,1fr)}
+  .caio-home-grid{gap:48px}
+  .caio-lp-grid{gap:36px;padding:36px 0 56px}
+  .caio-lp-jump{display:inline-flex}
+  .caio-hero .service-hero-grid{grid-template-columns:minmax(0,1fr)}
+  .caio-pilot{gap:28px}
+  .caio-audience-grid{gap:36px}
+}
+@media (max-width:760px){
+  .caio-comp-roadmap{grid-template-columns:minmax(0,1fr);padding:24px}
+  .caio-comp-lead{padding:28px}
+  .caio-comp-row{grid-template-columns:minmax(0,1fr)}
+  .caio-comp-small,.caio-comp-small:first-child{padding:24px 0 8px}
+  .caio-comp-small+.caio-comp-small{border-left:0;border-top:1px solid #c6cec0}
+  .caio-moments{grid-template-columns:minmax(0,1fr);gap:36px}
+  .caio-month{padding:22px;margin-top:56px}
+  .caio-weeks{grid-template-columns:minmax(0,1fr)}
+  .caio-pilot{padding:28px;margin-top:56px}
+  .caio-route li{grid-template-columns:90px minmax(0,1fr);font-size:16px}
+  .caio-ev-col{padding:24px}
+  .caio-insight{padding-left:20px}
+  .caio-audience-list li{font-size:18px}
+  .caio-capabilities{grid-template-columns:minmax(0,1fr)}
+  .caio-lp-close{padding:64px 0}
+  .lp-header .nav-cta{font-size:12px;padding:10px 12px}
+}
+@media (max-width:480px){
+  .caio-form-row{grid-template-columns:minmax(0,1fr);gap:0}
+  .caio-cycle-panel{padding:18px 14px}
+  .caio-cycle{--r:35%}
+  .caio-cycle-nodes li{font-size:12px;padding:7px 10px}
+  .caio-cycle-center{inset:33%}
+  .caio-cycle-center small{display:none}
+  .caio-cycle-center strong{font-size:16px}
+  .lp-header .brand-sub{display:none}
+  .caio-roadmap table{min-width:0}
+  .caio-roadmap th:nth-child(4),.caio-roadmap td:nth-child(4){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .caio-cycle-ring,.caio-cycle-nodes li{animation:none}
+  .caio-cycle-runner{display:none}
+  .caio-cycle-nodes li:nth-child(1){background:var(--accent);color:#101312;border-color:var(--accent)}
+}

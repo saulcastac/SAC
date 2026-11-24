@@ -11,6 +11,7 @@ Sitio estático en HTML, CSS y JavaScript vanilla. Sin paquetes, instalación ni
 | `/servicios/capacitacion-ia` | `servicios/capacitacion-ia.html` |
 | `/servicios/acompanamiento-ia` | `servicios/acompanamiento-ia.html` |
 | `/servicios/desarrollo-web` | `servicios/desarrollo-web.html` |
+| `/direccion-ia` | `direccion-ia.html` — landing de campañas (Meta Ads), `noindex`, fuera del sitemap |
 | `/privacidad.html` | Aviso de privacidad |
 | `/gracias.html` | Confirmación, excluida de buscadores con `noindex` |
 
@@ -53,6 +54,26 @@ El origen público temporal está en `site-config.json`. Para cambiarlo, editar 
 
 Cada landing tiene title, descripción, H1, canonical y Open Graph propios; se reutiliza `og-image.png` (1731 × 909), que solo descargan las plataformas al compartir, no las landings. `sitemap.xml` incluye páginas públicas y `robots.txt` señala su ubicación. Las ilustraciones son CSS y no requieren imágenes adicionales ni fuentes externas. Las animaciones respetan reduced motion.
 
+## Dirección de IA externa (Fractional CAIO)
+
+Oferta de acompañamiento mensual, alternativa al embudo diagnóstico → Mapa de IA → implementación (que no cambia). Una sola fuente de contenido (`CAIO` en `scripts/build_services.py`) genera tres piezas:
+
+| Pieza | Ruta | Para quién |
+| --- | --- | --- |
+| Sección en homepage (entre los marcadores `caio:inicio`/`caio:fin` de `index.html`) | `/#direccion-ia` | Visitantes que ya conocen SAC |
+| Página de servicio, indexable | `/servicios/acompanamiento-ia` | Orgánico y navegación |
+| Landing de campañas, `noindex`, sin menú | `/direccion-ia` | Tráfico frío de Meta Ads |
+
+No editar a mano esas piezas: cambiar el copy en el generador y ejecutarlo. El H1 de la landing cambia según `utm_content` con una lista blanca (`liderazgo`, `continuidad`, `direccion-externa`); cualquier otro valor deja el H1 por defecto.
+
+URLs para anuncios (ajustar `utm_campaign`):
+
+- Ángulo A: `https://saacstudio.com/direccion-ia?utm_source=meta&utm_medium=paid_social&utm_campaign=fractional-caio&utm_content=liderazgo`
+- Ángulo B: `https://saacstudio.com/direccion-ia?utm_source=meta&utm_medium=paid_social&utm_campaign=fractional-caio&utm_content=continuidad`
+- Ángulo C: `https://saacstudio.com/direccion-ia?utm_source=meta&utm_medium=paid_social&utm_campaign=fractional-caio&utm_content=direccion-externa`
+
+Formulario: nombre, empresa, correo profesional, cargo, colaboradores y objetivo (todos obligatorios), más `servicio_origen=fractional-caio`, `modalidad=acompanamiento-mensual`, `landing_origen` y UTMs. El asunto distingue la landing de campañas de la página de servicio.
+
 ## Contacto
 
 El propietario confirmó que el formulario existente está activado y funciona. Todos los formularios usan POST nativo a `https://formsubmit.co/saulcastac@gmail.com`, con consentimiento obligatorio, honeypot y antispam predeterminado de FormSubmit. No se desactiva CAPTCHA ni se intercepta el envío con AJAX.
@@ -94,7 +115,7 @@ Para activar medición en el futuro:
 
 - Con `PIXEL_ID = ''` no hace nada: sin banner, sin red, sin cookies, y el botón «Cookies» del pie sigue oculto.
 - Con un Pixel ID: banner con «Aceptar» y «Rechazar» del mismo peso; la elección se guarda 180 días en `localStorage` (`sac:consent:v1`) y se cambia desde cualquier `[data-cookie-settings]`. Solo al aceptar se carga `fbevents.js`; al rechazar se revoca y se borran `_fbp`/`_fbc`.
-- Habilita `SAC_ANALYTICS_CONFIG` y llama `SACAnalytics.setConsent()`. Traducción: `contact_completed` → `Lead` (`content_name: contacto_<servicio>`), `whatsapp_click` → `Contact`, `cta_click` → `CTAClick`.
+- Habilita `SAC_ANALYTICS_CONFIG` y llama `SACAnalytics.setConsent()`. Traducción: `contact_completed` → `Lead` (`content_name: contacto_<servicio>`), `contact_submit` → `SubmitAttempt` (intento, nunca `Lead`), `whatsapp_click` → `Contact`, `cta_click` → `CTAClick` (con servicio), `landing_view` → `ViewContent` solo para `fractional-caio`. `PageView` lo envía una sola vez el código base.
 - Diagnóstico: `track()` usa `window.SACTrack` → `ViewContent`, `StartDiagnostic`, `Lead`, `BookingLinkClick`, `Schedule` (cita confirmada por HubSpot). Los eventos previos a la decisión quedan en cola y se envían solo si se acepta.
 - Nunca se envían nombre, correo, teléfono, empresa ni respuestas. Pendiente: API de Conversiones (servidor) y deduplicación por `event_id`.
 

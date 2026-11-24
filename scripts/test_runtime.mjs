@@ -27,3 +27,31 @@ const window={location:{search:'?utm_campaign=workshop&utm_source=meta'},addEven
 vm.runInNewContext(read('main.js'),{document,window,URLSearchParams,URL,Date});assert.equal(inputs.utm_campaign.value,'workshop');assert.equal(inputs.utm_source.value,'meta');listeners.submit();
 document.getElementById=()=>null;vm.runInNewContext(read('main.js'),{document,window,URLSearchParams,URL,Date});
 console.log('PASS: disabled-by-default analytics; consent/revocation; no PII fields; campaign capture; no direct/repeated conversion; blocked storage; native form handler; missing page elements.');
+// Meta bridge: consent granted → PageView once, ViewContent only for the CAIO offer, Lead only on completion.
+function pixel(stored='granted') {
+  const handlers={}; const docHandlers={};
+  const script={parentNode:{insertBefore(){}}};
+  const store=new Map(stored?[['sac:consent:v1',JSON.stringify({s:stored,t:Date.now()})]]:[]);
+  const document={head:{appendChild(){}},body:{appendChild(){}},cookie:'',createElement:()=>({setAttribute(){},addEventListener(){},querySelector:()=>({focus(){}})}),getElementsByTagName:()=>[script],querySelectorAll:()=>[],addEventListener:(name,fn)=>docHandlers[name]=fn};
+  const window={addEventListener:(name,fn)=>handlers[name]=fn};
+  const localStorage={getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)};
+  vm.runInNewContext(read('tracking.js'),{window,document,localStorage,location:{hostname:'saacstudio.com'},Date,JSON,Set});
+  docHandlers.DOMContentLoaded();
+  const fire=detail=>handlers['sac:analytics']({detail});
+  const calls=()=>window.fbq.queue.map(args=>[...args]);
+  return {fire,calls,window};
+}
+let px=pixel();
+px.fire({event:'landing_view',service:'fractional-caio',landing:'/direccion-ia'});
+px.fire({event:'landing_view',service:'automatizacion-ia',landing:'/servicios/automatizacion-ia'});
+px.fire({event:'contact_submit',service:'fractional-caio'});
+px.fire({event:'contact_completed',service:'fractional-caio'});
+px.fire({event:'cta_click',service:'fractional-caio',placement:'hero'});
+let c=px.calls();
+assert.equal(c.filter(x=>x[1]==='PageView').length,1);
+assert.equal(c.filter(x=>x[1]==='ViewContent').map(x=>x[2].content_name).join(),'fractional-caio');
+assert.equal(c.filter(x=>x[1]==='Lead').length,1);assert.equal(c.find(x=>x[1]==='Lead')[2].content_name,'contacto_fractional-caio');
+assert.equal(c.find(x=>x[1]==='SubmitAttempt')[0],'trackCustom');
+assert.ok(c.every(x=>!JSON.stringify(x).includes('@')));
+px=pixel('denied');px.fire({event:'contact_completed',service:'fractional-caio'});assert.equal(px.window.fbq,undefined);
+console.log('PASS: Meta bridge — single PageView, CAIO ViewContent, submit attempt separate from Lead, nothing without consent.');

@@ -71,9 +71,13 @@
   /* Puente analytics.js → eventos de Meta (sin datos personales). */
   window.addEventListener('sac:analytics', (e) => {
     const d = e.detail || {};
+    // Lead solo con el retorno a gracias tras un envío (contact_completed); el intento va aparte.
     if (d.event === 'contact_completed') window.SACTrack('Lead', { content_name: `contacto_${d.service || 'inicio'}` });
+    else if (d.event === 'contact_submit') window.SACTrack('SubmitAttempt', { content_name: `contacto_${d.service || 'inicio'}` });
     else if (d.event === 'whatsapp_click') window.SACTrack('Contact', { content_name: d.service || 'inicio' });
-    else if (d.event === 'cta_click') window.SACTrack('CTAClick', { placement: d.placement || '' });
+    else if (d.event === 'cta_click') window.SACTrack('CTAClick', { placement: d.placement || '', content_name: d.service || 'inicio' });
+    // PageView ya lo envía load(); ViewContent distingue la oferta de dirección de IA (servicio y landing).
+    else if (d.event === 'landing_view' && d.service === 'fractional-caio') window.SACTrack('ViewContent', { content_name: 'fractional-caio', content_category: d.landing || '' });
   });
 
   /* ---------- Banner ---------- */

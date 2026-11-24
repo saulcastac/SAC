@@ -43,6 +43,10 @@
     {
       "source": "/trabajo",
       "destination": "/trabajo.html"
+    },
+    {
+      "source": "/direccion-ia",
+      "destination": "/direccion-ia.html"
     }
   ],
   "redirects": [

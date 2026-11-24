@@ -23,3 +23,11 @@ Comandos reproducibles en README. La captura de campaña se valida con valores s
 - Las pruebas de pantallas son de navegador, no teléfonos físicos.
 - Analítica y publicidad permanecen deshabilitadas. No se verificó proveedor externo porque no hay identificadores, adaptador ni gestor de consentimiento configurados.
 - La señal futura de contacto completado refleja el retorno al agradecimiento con un intento previo, no la entrega autoritativa del correo. Ver detalles en README.
+
+## Dirección de IA externa (rama `feat/fractional-caio`, 24 de noviembre de 2026)
+
+- `check_site.py`: 8 páginas, 7 rutas limpias; `/direccion-ia` con `noindex`, sin canonical ni navegación, fuera del sitemap; formularios CAIO con empresa, cargo y colaboradores obligatorios y `servicio_origen=fractional-caio`. Se corrigieron anclas rotas preexistentes (`#proyectos`, `#soluciones`).
+- `test_runtime.mjs`: puente de Meta con un solo `PageView`, `ViewContent` solo para la oferta CAIO, `SubmitAttempt` separado de `Lead`, nada sin consentimiento y sin datos personales.
+- Chrome (headless) a 1440 y 390 px: homepage, servicio y landing con cada `utm_content` y un valor no permitido (`<img src=x>`, que deja el H1 por defecto). Sin overflow horizontal ni errores de consola.
+- El generador se ejecutó dos veces sin diferencias (idempotente) y conserva la FAQ de precios de automatización y el sitemap con `/mapa-ia` y `/trabajo`.
+- Pendiente: probar en un preview de Vercel, enviar un formulario real y verificar eventos con el Test Events de Meta.
